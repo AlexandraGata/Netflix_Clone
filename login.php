@@ -5,7 +5,7 @@
     require_once("includes\classes\Constants.php");
 
     $account = new Account($conn);
-    
+
     if(isset($_POST["submitRegistration"])){
         $username = FormSanitizer::sanitizeFormUsername($_POST["username"]);
         $password = FormSanitizer::sanitizeFormPassword($_POST["password"]);
@@ -14,11 +14,16 @@
         $success = $account->login($username, $password);
 
         if($success){
-            // Store session
+            $_SESSION["userLoggedIn"] = $username;
             header("Location: index.php");
         }
     }
 
+    function getInputValue($name){
+        if (isset($_POST[$name])){
+            echo $_POST[$name];
+        }
+    }
 
 
 ?>
@@ -45,7 +50,7 @@
 
             <form method="POST" action="">
                 <?php echo $account->getError(Constants::$loginFailed); ?>
-                <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="username" placeholder="Username" value="<?php getInputValue("username")?>" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <input type="submit" name="submitRegistration" value="Submit">
             </form>
