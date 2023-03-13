@@ -1,11 +1,11 @@
 <?php
+require_once("C:\wamp64\www\movie_app\includes\classes\FormSanitizer.php");
+
     if(isset($_POST["submitRegistration"])){
-        $firstName = $_POST["firstName"];
+        $firstName = FormSanitizer::sanitizeFormString($_POST["firstName"]);
+        $lastName = FormSanitizer::sanitizeFormString($_POST["lastName"]);
         
     }
-
-
-
 ?>
 
 
